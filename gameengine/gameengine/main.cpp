@@ -1,11 +1,10 @@
 #include "Test.h"
-#include <stdio.h>
+#include <iostream>
 
 int main()
 {
 	Test test;
-	test.print();
-	test.sum(10, 15);
+	std::cout << test.print() << std::endl;
 
 	getchar();
 }

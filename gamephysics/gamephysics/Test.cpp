@@ -1,22 +1,13 @@
 #include "Test.h"
-#include <stdio.h>
+#include <string>
 
-Test::Test()
-{
-}
+Test::Test() {}
 
 
-Test::~Test()
-{
-}
+Test::~Test() {}
 
-void Test::print()
-{
-	printf("Ich bin eine Testklasse!\n");
-}
-
-void Test::sum(int a, int b)
-{
-	printf("%d + %d = %d\n", a, b, a + b);
+std::string Test::print() {
+	std::string str = std::string("This is a test class");
+	return str;
 }
 
