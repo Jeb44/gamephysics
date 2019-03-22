@@ -20,9 +20,22 @@ public:
 	Vector& operator-=(const Vector& rhs);
 	friend Vector operator-(Vector lhs, const Vector& rhs);
 
+	void multiplication(const float scalar);
+	Vector& operator*=(const float& scalar);
+	friend Vector operator*(Vector lhs, const float& scalar);
+
+	//add static functions
+	Vector negate();
+	float length();
+	Vector normalize(); 
+	float dot(const Vector& rhs);
+	Vector project(const Vector& rhs);
+	Vector cross(const Vector& rhs);
+
 	friend bool operator==(const Vector& lhs, const Vector& rhs);
 	friend bool operator!=(const Vector& lhs, const Vector& rhs);
 
 	std::string print();
+
 };
 
