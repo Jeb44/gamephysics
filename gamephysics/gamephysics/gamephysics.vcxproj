@@ -130,10 +130,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="stringHelper.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="stringHelper.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
