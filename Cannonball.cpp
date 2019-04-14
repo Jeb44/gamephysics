@@ -12,12 +12,7 @@ CannonBall::CannonBall(SimulationWindow* window, const glm::vec3& pos) {
 	initParticleNode();
 }
 
-CannonBall::~CannonBall() {
-	delete m_particleNode;
-	delete m_particle;
-	delete m_node;
-	delete m_drawable;
-}
+CannonBall::~CannonBall() = default;
 
 ec::Node* CannonBall::getNode() {
 	return m_node;

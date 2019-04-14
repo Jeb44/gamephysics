@@ -25,7 +25,7 @@ void TeilchenWelt::addParticle(Teilchen* particle) {
 bool TeilchenWelt::removeParticle(Teilchen* particle) {
 	//remove doesn't "remove" the particle, it only shows where it is (iterator)
 	//since it's iterating over m_particles it stops at .end() and returns therefore it
-	const auto particleToRemove = std::remove(m_particles.begin(), m_particles.end(), particle);
+	auto particleToRemove = std::remove(m_particles.begin(), m_particles.end(), particle);
 	const bool isFound = particleToRemove != m_particles.end();
 	if (isFound) {
 		m_particles.erase(particleToRemove);

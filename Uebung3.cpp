@@ -24,12 +24,7 @@ Uebung3::Uebung3(const std::string& name, SimulationWindow* window)
 	m_root->addChild(m_nMain);
 }
 
-Uebung3::~Uebung3() {
-	delete m_cave;
-	//delete m_cannonball;
-	delete m_cannon;
-	delete m_nMain;
-}
+Uebung3::~Uebung3() = default;
 
 void Uebung3::tick(const float timeDelta) {
 	__super::tick(timeDelta);

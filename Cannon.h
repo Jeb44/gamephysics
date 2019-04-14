@@ -16,12 +16,13 @@ public:
 	~Cannon();
 
 	glm::vec3 spawnPoint {0.0f, 0.0f, 0.0f};
+	
+	ec::Node* getNode();
 
+	//Uebung 3
 	void addCannonball();
 	bool removeCannonball(CannonBall* cannonball);
 	void update(const float timeDelta);
-
-	ec::Node* getNode();
 
 private:
 	ec::Node* m_node;

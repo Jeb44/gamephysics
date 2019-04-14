@@ -1,5 +1,9 @@
 #include "Teilchen.h"
 
+Teilchen::Teilchen() {
+	init(TeilchenDef());
+}
+
 Teilchen::Teilchen(const TeilchenDef& definition) {
 	init(definition);
 }

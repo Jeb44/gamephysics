@@ -7,6 +7,7 @@
 
 class Teilchen {
 public:
+	Teilchen();
 	Teilchen(const TeilchenDef& definition);
 	~Teilchen();
 
