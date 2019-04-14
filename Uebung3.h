@@ -9,6 +9,7 @@
 #include "Teilchen.h"
 #include "Cave.h"
 #include "CannonBall.h"
+#include "Cannon.h"
 
 class Uebung3 :
 	public SimulationScene {
@@ -22,8 +23,9 @@ private:
 	Cave* m_cave;
 	ec::Node* m_nMain;
 
-	CannonBall* m_cannonball;
+	//CannonBall* m_cannonball;
+	Cannon* m_cannon;
 
-	bool m_shoot;
+	//bool m_shoot;
 };
 

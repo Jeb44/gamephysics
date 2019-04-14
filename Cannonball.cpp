@@ -31,6 +31,21 @@ TeilchenNode* CannonBall::getParticleNode() {
 	return m_particleNode;
 }
 
+void CannonBall::update(const float timeDelta) {
+
+	//m_cannonball->getParticle()->integrate(timeDelta);
+	//m_cannonball->getParticleNode()->update();
+
+	m_particle->integrate(timeDelta);
+	m_particleNode->update();
+
+	timeToDie -= timeDelta;
+	if (timeToDie <= 0.0f) {
+		m_particle->setDead(true);
+	}
+
+}
+
 void CannonBall::initDrawableNode(SimulationWindow* window) {
 	//Drawable
 	auto& reg = window->getDrawableRegistry();

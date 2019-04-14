@@ -1,15 +1,17 @@
 #pragma once
 #include "TeilchenEngineCI.h"
-class DefaultTeilchenEngineCI :
-	public TeilchenEngineCI {
+#include "TeilchenWelt.h"
+
+class DefaultTeilchenEngineCI :	public TeilchenEngineCI {
 
 public:
-	DefaultTeilchenEngineCI();
+	explicit DefaultTeilchenEngineCI(TeilchenWelt* particleWorld = nullptr);
 	~DefaultTeilchenEngineCI();
 
 	void integrate(const float timeDelta) override;
 	void onBegin() override;
 	void onEnd() override;
-	void step() override;
+	void step(const float timeDelta) override;
+	void reset() override;
 };
 

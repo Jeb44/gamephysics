@@ -10,8 +10,8 @@ public:
 
 	void update() const;
 
-	auto getNode();
-	auto getParticle();
+	Teilchen* getParticle() const;
+	 ec::Node* getNode() const;
 
 private:
 	ec::Node* m_node;

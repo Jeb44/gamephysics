@@ -16,6 +16,10 @@ public:
 	Teilchen* getParticle();
 	TeilchenNode* getParticleNode();
 
+	float timeToDie {3};
+
+	void update(const float timeDelta);
+
 private:
 	void initDrawableNode(SimulationWindow* window);
 	void initParticle();

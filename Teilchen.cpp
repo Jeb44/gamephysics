@@ -40,11 +40,11 @@ glm::vec3 Teilchen::getAcceleration() const {
 	return m_acceleration;
 }
 
-void Teilchen::setMass(float mass) {
+void Teilchen::setMass(const float mass) {
 	m_inverseMass = 1.0f / mass;
 }
 
-void Teilchen::setInverseMass(float inverseMass) {
+void Teilchen::setInverseMass(const float inverseMass) {
 	m_inverseMass = inverseMass;
 }
 
@@ -55,13 +55,15 @@ float Teilchen::getMass() const {
 	return (static_cast<float>(1.0f)) / m_inverseMass;
 }
 
-void Teilchen::clearAccumulator() {}
+void Teilchen::clearAccumulator() {
+	m_forceAccumulator = glm::vec3(0.0f);
+}
 
 void Teilchen::addForce(const glm::vec3& force) {
 	m_forceAccumulator += force;
 }
 
-void Teilchen::integrate(float duration) {
+void Teilchen::integrate(const float duration) {
 	if(m_isDead || m_inverseMass <= 0) return;
 	assert(duration > 0.0f);
 
@@ -75,4 +77,12 @@ void Teilchen::integrate(float duration) {
 	m_velocity *= pow(m_damping, duration);
 
 	clearAccumulator();
+}
+
+void Teilchen::setDead(const bool died) {
+	m_isDead = died;
+}
+
+bool Teilchen::isDead() const {
+	return m_isDead;
 }

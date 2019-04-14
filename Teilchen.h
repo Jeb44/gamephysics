@@ -21,13 +21,16 @@ public:
 	void setAcceleration(const glm::vec3& acceleration);
 	glm::vec3 getAcceleration() const;
 
-	void setMass(float mass);
-	void setInverseMass(float mass);
+	void setMass(const float mass);
+	void setInverseMass(const float mass);
 	float getMass() const;
 
 	void clearAccumulator();
 	void addForce(const glm::vec3& force);
-	virtual void integrate(float duration);
+	virtual void integrate(const float duration);
+
+	void setDead(const bool died);
+	bool isDead() const;
 
 protected:
 	glm::vec3 m_position;
