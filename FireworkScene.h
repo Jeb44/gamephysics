@@ -22,7 +22,7 @@ public:
 private:
 	void addFirework();
 	FireworkDefintion m_defMain;
-	FireworkDefintion m_defPayload;
+	FireworkDefintion* m_defPayloads;
 
 	float m_resetTime;
 	float m_countingTime;

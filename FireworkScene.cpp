@@ -13,21 +13,38 @@ FireworkScene::FireworkScene(const std::string& name, SimulationWindow* window)
 	auto& reg = window->getDrawableRegistry();
 	m_drawable = reg.getResource("sphere");
 
+	//Main Firework
 	m_defMain.ageMin = 1.0f;
 	m_defMain.ageMax = 2.0f;
 	m_defMain.velocityMin = glm::vec3(0.0f, 0.5f, 0.0f);
 	m_defMain.velocityMax = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	m_defPayload.ageMin = 1.0f;
-	m_defPayload.ageMax = 2.0f;
-	m_defPayload.velocityMin = glm::vec3(0.5f, 0.5f, 0.5f);
-	m_defPayload.velocityMax = glm::vec3(1.0f, 1.0f, 1.0f);
-
 	m_defMain.count = 1;
-	m_defPayload.count = 0;
-
 	m_defMain.drawable = m_drawable;
-	m_defPayload.drawable = m_drawable;
+
+	//Payloads
+	m_defPayloads = new FireworkDefintion[3];
+	m_defPayloads[0].ageMin = 1.0f;
+	m_defPayloads[0].ageMax = 2.0f;
+	m_defPayloads[1].ageMin = 1.0f;
+	m_defPayloads[1].ageMax = 2.0f;
+	m_defPayloads[2].ageMin = 1.0f;
+	m_defPayloads[2].ageMax = 2.0f;
+
+	m_defPayloads[0].velocityMin = glm::vec3(0.25f, -0.25f, -0.25f);
+	m_defPayloads[0].velocityMax = glm::vec3(0.5f, 0.25f, 0.25f);
+	m_defPayloads[1].velocityMin = glm::vec3(-0.25f, 0.25f, -0.25f);
+	m_defPayloads[1].velocityMax = glm::vec3(0.25f, 0.5f, 0.25f);
+	m_defPayloads[2].velocityMin = glm::vec3(-0.25f, -0.25f, 0.25f);
+	m_defPayloads[3].velocityMax = glm::vec3(0.25f, 0.25f, 0.5f);
+		
+	m_defPayloads[0].count = 0;
+	m_defPayloads[1].count = 0;
+	m_defPayloads[2].count = 0;
+
+	m_defPayloads[0].drawable = m_drawable;
+	m_defPayloads[1].drawable = m_drawable;
+	m_defPayloads[2].drawable = m_drawable;
 
 	m_resetTime = 0.5f;
 	m_countingTime = 0.0f;
@@ -60,9 +77,9 @@ void FireworkScene::tick(const float timeDelta) {
 	m_countingTime += timeDelta;
 
 	auto particles = m_particleWorld->getParticles();
-	for(size_t i = 0, iLen = particles.size(); i < iLen; i++) {
+	for(size_t i = particles.size();  i >= 0; i--) {
 		if(particles[i]->isDead()) {
-			//add removal
+			
 		}
 	}
 }
