@@ -48,7 +48,7 @@ void FireworkParticle::integrate(float duration) {
 }
 
 FireworkParticle* FireworkParticle::getPayloadParticles() {
-	return m_payload->getParticles;
+	return m_payload->getParticles();
 }
 
 FireworkParticle::Payload::Payload() {}

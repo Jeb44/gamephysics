@@ -1,6 +1,6 @@
 #include "FireworkScene.h"
 
-
+#include <iostream>
 
 FireworkScene::FireworkScene(const std::string& name, SimulationWindow* window)
 	: SimulationScene(name, window)
@@ -53,7 +53,6 @@ FireworkScene::FireworkScene(const std::string& name, SimulationWindow* window)
 	m_cave = new Cave(window);
 	m_main->addChild(m_cave->getCave());
 
-	//
 	m_main->setTranslationZ(5.0f);
 	m_root->addChild(m_main);
 }
@@ -68,18 +67,15 @@ void FireworkScene::tick(const float timeDelta) {
 		addFirework();
 		m_countingTime = 0.0f;
 	}
-
-	//ParticleEngine updated all particles that are in ParticleWorld
-	/* m_particleWorld->getComputationInterface();
-	m_particleWorld->getComputationInterface()->integrate(timeDelta);
-	m_particleNodeWorld->update();*/
-
+	
 	m_countingTime += timeDelta;
 
-	auto particles = m_particleWorld->getParticles();
-	for(size_t i = particles.size();  i >= 0; i--) {
-		if(particles[i]->isDead()) {
-			
+	auto particleNodes = m_particleNodeWorld->getParticleNodes();
+	
+	for(int i = particleNodes.size() - 1;  i >= 0; i--) {
+		if(particleNodes[i]->getParticle()->isDead()) {
+			m_main->removeChild(particleNodes[i]->getNode());
+			m_particleNodeWorld->removeParticleNode(particleNodes[i]);
 		}
 	}
 }
