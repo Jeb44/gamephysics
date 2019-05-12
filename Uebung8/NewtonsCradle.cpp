@@ -21,7 +21,7 @@ NewtonsCradle::NewtonsCradle(int numOfPendulums,
 	this->numOfPendulums = numOfPendulums;
 	this->cableHeight = cableHeight;
 
-	buffer = 0.25f;
+	buffer = 0.0f;
 
 	nodes = new ec::Node*[numOfPendulums];
 	particles = new r3::Particle*[numOfPendulums];
@@ -31,7 +31,7 @@ NewtonsCradle::NewtonsCradle(int numOfPendulums,
 	cables = new r3::ParticleCable*[numOfPendulums];
 	collisions = new r3::ParticleCollision*[numOfPendulums - 1];
 
-	gravity = new r3::ParticleGravity(glm::vec3(0, -1, 0));
+	gravity = new r3::ParticleGravity(glm::vec3(0, -9.81, 0));
 
 	//Inizialize
 	for(size_t i = 0, max = numOfPendulums; i < max; i++) {
@@ -41,7 +41,7 @@ NewtonsCradle::NewtonsCradle(int numOfPendulums,
 
 		particles[i] = new r3::Particle();
 		particles[i]->setPosition(startPosBall + glm::vec3((buffer + 2) * i, 0.0f, 0.0f));
-		particles[i]->setMass(10.0f);
+		particles[i]->setMass(1000.0f);
 		particleNodeWorld->getWorld()->addParticle(particles[i]);
 
 		anchors[i] = new r3::Particle();
@@ -52,14 +52,14 @@ NewtonsCradle::NewtonsCradle(int numOfPendulums,
 
 		particleNodeWorld->getWorld()->getParticleForceRegistry().add(particles[i], gravity);
 
-		cables[i] = new r3::ParticleCable(5.0f, 0.1f);
+		cables[i] = new r3::ParticleCable(cableHeight, 0.1f);
 		cables[i]->setParticles(particles[i], anchors[i]);
 		particleNodeWorld->getWorld()
 			->getContactGeneratorRegistry().registerContactGenerator(cables[i]);
 	}
 
 	for(size_t i = 0, max = numOfPendulums - 1; i < max; i++) {
-		collisions[i] = new r3::ParticleCollision(0.9, 2.0, 0.0f);
+		collisions[i] = new r3::ParticleCollision(1.0, 2.0, 0.0f);
 		collisions[i]->setParticles(particles[i], particles[i + 1]);
 		particleNodeWorld->getWorld()
 			->getContactGeneratorRegistry().registerContactGenerator(collisions[i]);
