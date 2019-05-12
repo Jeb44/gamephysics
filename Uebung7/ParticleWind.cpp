@@ -20,17 +20,18 @@ void ParticleWind::updateForce(Particle * particle, real duration) {
 	const auto depth = particle->getPosition().y;
 	const auto halfMaxDepth = m_maxDepth / 2.0f;
 
-	glm::vec3 force(real(0.0f));
-
-	//inside "liquid"
+	//outside "liquid"
 	if(depth > m_liquidHeight + halfMaxDepth) {
-		force = m_windStrength;
-		particle->addForce(force);
-		std::cout << "Added wind Force: (" 
-			<< force.x << ", " << force.y << ", " << force.z << ")" << std::endl;
+		particle->addForce(m_windStrength);
+		std::cout 
+			<< "Added wind Force: (" 
+			<< m_windStrength.x << ", " 
+			<< m_windStrength.y << ", " 
+			<< m_windStrength.z << ")" 
+		<< std::endl;
 		return;
 	} 
-	//outside "liquid"
+	//inside "liquid"
 	else {
 		std::cout << "Added no Force" << std::endl;
 		return;

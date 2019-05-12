@@ -31,5 +31,4 @@ private:
 	r3::ParticleGravity* m_particleGravity;
 	r3::ParticleBuoyancy* m_particleBuoyancy;
 	ParticleWind* m_particleWind;
-
 };

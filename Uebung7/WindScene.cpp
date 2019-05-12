@@ -24,15 +24,12 @@ WindScene::WindScene(const std::string& name, SimulationWindow* window)
 	m_ballNode = new ec::Node();
 	m_ballNode->setTranslation(0.0, 10.0, 0.0);
 	m_ballNode->addDrawable(m_ballDrawable);
-//	m_cubeNode = new ec::Node();
-//	m_cubeNode->setScale(3);
-//	m_cubeNode->addDrawable(m_cubeDrawable);
 
 	m_root->addChild(m_ballNode);
 
 	// Init particle
 	m_ballParticle = new r3::Particle();
-	m_ballParticle->setVelocity(0.1f, 0.0, 0.0);
+	m_ballParticle->setVelocity(0.0, 0.0, 0.0);
 	m_ballParticle->setPosition(0, 10, 0);
 	m_ballParticle->setMass(400.0f);
 
@@ -47,7 +44,7 @@ WindScene::WindScene(const std::string& name, SimulationWindow* window)
 	m_particleGravity = new r3::ParticleGravity(glm::vec3(0.0f, -9.8f, 0.0f));
 	m_particleBuoyancy = new r3::ParticleBuoyancy(maxDepth, 1, liquidHeight);
 	m_particleWind = new ParticleWind(maxDepth, liquidHeight, glm::vec3(100.0f, 0.0f, 0.0f));
-
+	
 	// maybe add "more" gravity in particleBouyancy, 
 	// because it only applies when obj is partially or completely submerged
 	particleWorld->getParticleForceRegistry().add(m_ballParticle, m_particleGravity);

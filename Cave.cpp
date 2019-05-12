@@ -64,5 +64,5 @@ void Cave::init(SimulationWindow* window) {
 	m_nodeBackwall->setTranslationZ(-0.5f);
 	m_nodeBackwall->setScaleZ(0.01f);
 
-	//m_nodeMain->setTranslationY(0.0f);
+	m_nodeMain->setTranslation(glm::vec3(0.0f, 00.0f, 0.0f));
 }
