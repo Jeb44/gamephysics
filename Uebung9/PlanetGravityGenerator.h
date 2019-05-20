@@ -12,14 +12,13 @@
 class PlanetGravityGenerator : public r3::IParticleForceGenerator
 {
 public:
-	explicit PlanetGravityGenerator(r3::Particle* centre, 
-									const r3::real constant = 1.0f);
+	explicit PlanetGravityGenerator(r3::Particle* centre);
 	~PlanetGravityGenerator();
 
 	void updateForce(r3::Particle* particle, r3::real duration) override;
 
 private:
 	r3::Particle* centre;
-	r3::real constant;
+	const r3::real constant = 6.674E-11;
 };
 

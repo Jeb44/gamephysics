@@ -9,30 +9,23 @@
 #include <iostream>
 
 
-PlanetGravityGenerator::PlanetGravityGenerator(r3::Particle* centre,
-											   const r3::real constant = 1.0f){
+PlanetGravityGenerator::PlanetGravityGenerator(r3::Particle* centre){
 	this->centre = centre;
-	this->constant = constant;
 }
 
 PlanetGravityGenerator::~PlanetGravityGenerator()
 = default;
 
 void PlanetGravityGenerator::updateForce(r3::Particle * particle, r3::real duration) {
-	// F_G = constant (m1 * m2) / distance
-	// distance = centre - particle
-	
-	//wikipedia bild: m1 cross m2 (? masse ist doch kein vektor)
-	glm::length(glm::vec3(0, 0, 0));
-	float distance = glm::length(centre->getPosition() - particle->getPosition());
-	//constant = 6, 672 * 10 ^ -11
-	float force = constant * ((centre->getMass() * particle->getMass()) / glm::pow(distance, 2));
+	//Calculate force
+	glm::vec3 distanceVector = centre->getPosition() - particle->getPosition();
+	// F_G = constant (m1 * m2) / distance(centre, particle)
+	float force = constant * ((centre->getMass() * particle->getMass()) / 
+							  glm::pow(glm::length(distanceVector), 2));
 
+	//Apply force to direction between to the particles
 	glm::vec3 forceVector;
-
-	if(centre->hasFiniteMass()) {
-		centre->addForce(forceVector);
-	}
+	forceVector = glm::normalize(distanceVector) * force;
 
 	particle->addForce(forceVector);
 }
