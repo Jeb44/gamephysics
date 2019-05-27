@@ -8,7 +8,6 @@
 #include "R3D/Utility/InertiaTensorGenerator.h"
 #include "R3D/RigidBodyEngine/Gravity.h"
 #include "R3D/RigidBodyEngine/Spring.h"
-#include "R3D/RigidBodyEngine/AnchoredSpring.h"
 
 #include "EC3D/Core/Node.h"
 
@@ -25,13 +24,12 @@ public:
 	void reset() override;
 
 private:
-	const int dimensions;
-	const int count;
+	const int x;
+	const int y;
+	const int z;
 	ec::Drawable* cuboidDrawable;
 
-	ec::Node** cuboidNode;
-	r3::RigidBody** cuboidRB;
-	RigidBodyNode** cuboidRBN;
+	RigidBodyNode**** cuboidRBN;
 	r3::Gravity* gravity;
-	r3::AnchoredSpring** spring;
+	r3::Spring** springs;
 };
