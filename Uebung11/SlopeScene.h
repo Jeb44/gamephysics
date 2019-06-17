@@ -9,6 +9,7 @@
 #include "R3D/RigidBodyEngine/Gravity.h"
 #include "R3D/RigidBodyEngine/CollisionSphere.h"
 #include "R3D/RigidBodyEngine/CollisionBox.h"
+#include "R3D/RigidBodyEngine/RigidBodyDef.h"
 
 #include "R3D/RigidBodyEngine/BoundingBox.h"
 
@@ -17,30 +18,35 @@
 #include "glm/matrix.hpp"
 #include <string>
 
-class FallingCubeOnSphereScene : public SimulationScene
+class SlopeScene : public SimulationScene
 {
 public:
-	explicit FallingCubeOnSphereScene(const std::string& name, SimulationWindow* window);
-	~FallingCubeOnSphereScene();
+	explicit SlopeScene(const std::string& name, SimulationWindow* window);
+	~SlopeScene();
 
 	void tick(float timeDelta) override;
 	void reset() override;
 
 private:
-	r3::real calcLargestRadius(ec::Node* node);
+	void spawnFallingSphere();
 
-	ec::Drawable* dCube;
+	RigidBodyNodeWorld* rbnWorld;
+	r3::RigidBodyWorld* rbWorld;
+
+	ec::Drawable* dSlope;
 	ec::Drawable* dSphere;
 
-	ec::Node* nCube;
-	r3::RigidBody* rbCube;
-	RigidBodyNode* rbnCube;
+	ec::Node* nSlope;
+	r3::RigidBody* rbSlope;
+	RigidBodyNode* rbnSlope;
 
-	ec::Node* nSphere;
-	r3::RigidBody* rbSphere;
-	RigidBodyNode* rbnSphere;
+	
+	
+	
 
 	r3::Gravity* fGravity;
 
 	r3::BoundingBox* bbCube;
+
+	r3::RigidBodyDef defSphere;
 };
