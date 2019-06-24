@@ -23,6 +23,8 @@ SlopeScene::SlopeScene(const std::string& name, SimulationWindow* window)
 	rbnWorld = m_physicsEngine.getRigidBodyNodeWorld();
 	rbWorld = rbnWorld->getWorld();
 
+	r3::Random::seed();
+
 	// Init scene graph node and add it to the scene graph
 	nSlope = new ec::Node();
 	nSlope->addDrawable(dSlope);
@@ -49,8 +51,7 @@ SlopeScene::SlopeScene(const std::string& name, SimulationWindow* window)
 	rbnWorld->addRigidBodyNode(rbnSlope);
 
 	//Init Forces
-	/*fGravity = new r3::Gravity(glm::vec3(0.0f, -2.0f, 0.0f));
-	rbWorld->getForceRegistry().registerForce(rbSlope, fGravity);*/
+	fGravity = new r3::Gravity(glm::vec3(0.0f, -2.0f, 0.0f));
 }
 
 
@@ -59,6 +60,28 @@ SlopeScene::~SlopeScene()
 
 void SlopeScene::tick(const float timeDelta)
 {
+	
+	if(m_keyboard->isKeyDown(ec::Keyboard::ENTER) &&
+	   timeCount >= cooldown) {
+		spawnFallingSphere();
+		timeCount = 0.0f;
+	}
+	timeCount += timeDelta;
+
+	auto rbns = rbnWorld->getRigidBodyNodes();
+
+	/*for(auto rbn : rbns){
+		if(rbn->getRigidBody()->getTransform().getPosition().y <= -1.0f){
+			removeSphere(rbn);
+		}
+	}*/
+
+	for(size_t i = 0, iLen = rbns.size(); i < iLen; i++){
+		if(rbns[i]->getRigidBody()->getTransform().getPosition().y <= -1.0f) {
+			removeSphere(rbns[i]);
+		}
+	}
+
 	SimulationScene::tick(timeDelta);
 }
 
@@ -68,24 +91,49 @@ void SlopeScene::reset()
 }
 
 void SlopeScene::spawnFallingSphere() {
+	// Init Node
 	ec::Node* nSphere = new ec::Node();
 	nSphere->addDrawable(dSphere);
 	nSphere->setScale(1.0f);
 	m_root->addChild(nSphere);
 
+	// Set Randoms
+	float x = r3::Random::randomFloat(-(nSlope->getScaleX() / 2.0f) + randBuffer,
+									  nSlope->getScaleX() / 2.0f - randBuffer);
+	float z = r3::Random::randomFloat(-(nSlope->getScaleZ() / 2.0f) + randBuffer,
+									  nSlope->getScaleZ
+									  () / 2.0f - randBuffer);
+
+	// Init Rigidbody
 	r3::RigidBody* rbSphere = new r3::RigidBody(defSphere);
-	rbSphere->getTransform().setPosition(glm::vec3(1.5f, 0.0f, 1.5f)); //randomize
+	rbSphere->getTransform().setPosition(glm::vec3(x, 5.0f, z));
 	rbSphere->setInertiaTensor(
 		r3::InertiaTensorGenerator::generateSphereTensor(
 		rbSphere->getMass(),
-		0.5f
+		1.0f
 		)
 	);
-	auto csSphere = new r3::CollisionSphere(rbSphere, 0.5f);
+	auto csSphere = new r3::CollisionSphere(rbSphere, 1.0f);
 	rbSphere->setCollisionPrimitive(csSphere);
 	rbWorld->addRigidBody(rbSphere);
 
-
+	// Init RigidbodyNode
 	RigidBodyNode* rbnSphere = new RigidBodyNode(rbSphere, nSphere);
 	rbnWorld->addRigidBodyNode(rbnSphere);
+
+	// Init Gravity
+	rbWorld->getForceRegistry().registerForce(rbSphere, fGravity);
+}
+
+void SlopeScene::removeSphere(RigidBodyNode* rbn){
+	/*m_root->removeChild(rbn->getNode());
+	delete rbn->getNode();
+
+	rbWorld->getForceRegistry().unregisterForce(rbn->getRigidBody(), fGravity);
+	delete rbn->getRigidBody()->getCollisionPrimitive();
+	rbWorld->removeRigidBody(rbn->getRigidBody());
+	delete rbn->getRigidBody();
+
+	rbnWorld->removeRigidBodyNode(rbn);
+	delete rbn;*/
 }

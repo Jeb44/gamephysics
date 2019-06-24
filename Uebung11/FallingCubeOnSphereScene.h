@@ -27,8 +27,6 @@ public:
 	void reset() override;
 
 private:
-	r3::real calcLargestRadius(ec::Node* node);
-
 	ec::Drawable* dCube;
 	ec::Drawable* dSphere;
 

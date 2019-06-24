@@ -38,6 +38,7 @@ FallingCubeOnSphereScene::FallingCubeOnSphereScene(const std::string& name, Simu
 	rbCube = new r3::RigidBody();
 	rbCube->setMass(1000.0f);
 	rbCube->getTransform().setPosition(glm::vec3(0.0f, 5.0f, 0.0f));
+	rbCube->getTransform().setRotation(glm::vec3(0.0f, 0.0f, 0.0f));
 	rbCube->setInertiaTensor(
 		r3::InertiaTensorGenerator::generateCubeTensor(
 			rbCube->getMass(),
@@ -51,19 +52,13 @@ FallingCubeOnSphereScene::FallingCubeOnSphereScene(const std::string& name, Simu
 						nCube->getScaleZ() / 2.0f);
 	auto* cbCube = new r3::CollisionBox(rbCube, halfSizes);
 	rbCube->setCollisionPrimitive(cbCube);
-	rbWorld->addRigidBody(rbCube);
+	//rbWorld->addRigidBody(rbCube);
 
 	rbSphere = new r3::RigidBody();
 	rbSphere->getTransform().setPosition(glm::vec3(1.5f, 0.0f, 1.5f));
-	/*rbSphere->setInertiaTensor(
-		r3::InertiaTensorGenerator::generateSphereTensor(
-		rbSphere->getMass(),
-		calcLargestRadius(nSphere)
-	)
-	);*/
-	auto csSphere = new r3::CollisionSphere(rbSphere, calcLargestRadius(nSphere));
+	auto* csSphere = new r3::CollisionSphere(rbSphere, 1.0f);
 	rbSphere->setCollisionPrimitive(csSphere);
-	rbWorld->addRigidBody(rbSphere);
+	//rbWorld->addRigidBody(rbSphere);
 
 	// Init RigidBodyNode
 	rbnCube = new RigidBodyNode(rbCube, nCube);
@@ -88,27 +83,6 @@ void FallingCubeOnSphereScene::tick(const float timeDelta)
 void FallingCubeOnSphereScene::reset()
 {
 	SimulationScene::reset();
-}
 
-r3::real FallingCubeOnSphereScene::calcLargestRadius(ec::Node* node) {
-	float x = node->getScaleX();
-	float y = node->getScaleY();
-	float z = node->getScaleZ();
-
-	if(x >= y) {
-		if(x >= z) {
-			return x / 2.0f;
-		}
-		else {
-			return z / 2.0f;
-		}
-	}
-	else {
-		if(y >= z) {
-			return y / 2.0f;
-		}
-		else {
-			return z / 2.0f;
-		}
-	}
+	rbCube->reset(glm::vec3(0.0f, 5.0f, 0.0f));
 }

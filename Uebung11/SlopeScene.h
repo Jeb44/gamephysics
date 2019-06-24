@@ -10,8 +10,7 @@
 #include "R3D/RigidBodyEngine/CollisionSphere.h"
 #include "R3D/RigidBodyEngine/CollisionBox.h"
 #include "R3D/RigidBodyEngine/RigidBodyDef.h"
-
-#include "R3D/RigidBodyEngine/BoundingBox.h"
+#include "R3D/Utility/Random.h"
 
 #include "EC3D/Core/Node.h"
 
@@ -29,6 +28,11 @@ public:
 
 private:
 	void spawnFallingSphere();
+	void removeSphere(RigidBodyNode* rbn);
+
+	float cooldown = 0.5f;
+	float timeCount = 0.0f;
+	float randBuffer = 0.25f;
 
 	RigidBodyNodeWorld* rbnWorld;
 	r3::RigidBodyWorld* rbWorld;
@@ -38,15 +42,8 @@ private:
 
 	ec::Node* nSlope;
 	r3::RigidBody* rbSlope;
-	RigidBodyNode* rbnSlope;
-
-	
-	
-	
-
-	r3::Gravity* fGravity;
-
-	r3::BoundingBox* bbCube;
+	RigidBodyNode* rbnSlope;	
 
 	r3::RigidBodyDef defSphere;
+	r3::Gravity* fGravity;
 };
