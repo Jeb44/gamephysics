@@ -69,16 +69,14 @@ void SlopeScene::tick(const float timeDelta)
 	timeCount += timeDelta;
 
 	auto rbns = rbnWorld->getRigidBodyNodes();
-
-	/*for(auto rbn : rbns){
-		if(rbn->getRigidBody()->getTransform().getPosition().y <= -1.0f){
-			removeSphere(rbn);
-		}
-	}*/
-
-	for(size_t i = 0, iLen = rbns.size(); i < iLen; i++){
+	
+	//std::cout << rbns.size() << std::endl;
+	for(size_t i = rbns.size() - 1, iLen = 0; i >= iLen; i--){
 		if(rbns[i]->getRigidBody()->getTransform().getPosition().y <= -1.0f) {
 			removeSphere(rbns[i]);
+		}
+		if(i == 0) {
+			break;
 		}
 	}
 
@@ -126,7 +124,7 @@ void SlopeScene::spawnFallingSphere() {
 }
 
 void SlopeScene::removeSphere(RigidBodyNode* rbn){
-	/*m_root->removeChild(rbn->getNode());
+	m_root->removeChild(rbn->getNode());
 	delete rbn->getNode();
 
 	rbWorld->getForceRegistry().unregisterForce(rbn->getRigidBody(), fGravity);
@@ -135,5 +133,5 @@ void SlopeScene::removeSphere(RigidBodyNode* rbn){
 	delete rbn->getRigidBody();
 
 	rbnWorld->removeRigidBodyNode(rbn);
-	delete rbn;*/
+	delete rbn;
 }
